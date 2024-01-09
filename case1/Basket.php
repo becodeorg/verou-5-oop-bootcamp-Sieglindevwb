@@ -13,6 +13,29 @@ class Basket {
         $this->price = $price;
     }
 
+    public function getBasketCalculator( array $items, float $taxFruit, float $taxWine) {
+        $totalPrice = 0;
+        $totalTaxPrice = 0;
+
+        foreach ($items as $item) {
+            $itemTotal = $item->quantity * $item->price;
+
+            $totalPrice += $itemTotal;
+
+            if ($item->name === 'Wine') {
+                $totalTaxPrice += $itemTotal * $taxWine;
+            } else {
+                $totalTaxPrice += $itemTotal * $taxFruit;
+            }
+        }
+
+        return [
+        'totalPrice' =>$totalPrice,
+        'totalTaxPrice' => $totalTaxPrice,
+        ];
+    }
+
+
 }
 
 $Banana = new Basket ("Banana", 6, 1.00);
@@ -39,12 +62,13 @@ foreach ($itemsBasket as $item) {
     }
 }
 
+$basketInstance = new Basket("", 0, 0);
 
-
-
-
-
-
-echo "Total Price without classes:" . " " . "€" . $totalPrice;
+echo "Total Price without classes:" . " " . "€" . $totalPrice . "<br>";
+echo "Total Tax Price without classes:" . " " . "€" . $totalTaxPrice . "<br>";
 echo "<br>";
-echo "Total Tax Price without classes:" . " " . "€" . $totalTaxPrice;
+
+$calculatorResult = $basketInstance->getBasketCalculator($itemsBasket, $taxFruit, $taxWine);
+
+echo "Total Price with classes: €" . $calculatorResult['totalPrice'] . "<br>";
+echo "Total Tax Price with classes: €" . $calculatorResult['totalTaxPrice'] . "<br>";
