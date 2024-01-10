@@ -12,14 +12,14 @@ require_once 'Ad.php';
 require_once 'Vacancy.php';
 
 $article1 = new Article ('Article 1 Title', 'Article 1 Text');
-$article2 = new Article ('Article 2 Title', 'Article 2 Text');
+$article2 = new Article ('Article 2 Title', 'Article 2 Text', true);
 $ad = new Ad ('Ad 1 Title', 'Ad 1 Text');
 $vacancy = new Vacancy ('Vacancy 1 Title', 'Vacancy 1 Text');
 
 $contentArray = [$article1, $article2, $ad, $vacancy];
 
 foreach ($contentArray as $content) {
-    echo '<h2>' . $content->displayTitle() . '</h2>';
-    echo '<p>' . $content->getText() . '</p>';
+    echo '<h2>' . htmlspecialchars($content->displayTitle()) . '</h2>';
+    echo '<p>' . htmlspecialchars($content->getText()) . '</p>';
     echo '<hr>';
 }
